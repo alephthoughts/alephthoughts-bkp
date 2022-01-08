@@ -3,6 +3,7 @@ layout: default
 title: Now
 permalink: /now/
 ---
+![]({{site.baseurl}}/images/logo.png "https://alephthoughts.com")
 
 ## Abhishek Sharma
 
