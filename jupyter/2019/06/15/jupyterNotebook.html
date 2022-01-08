@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Publication Ready Jupyter Notebooks | Alephthoughts</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Publication Ready Jupyter Notebooks" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="From notebooks to documents." />
+<meta property="og:description" content="From notebooks to documents." />
+<link rel="canonical" href="https://alephthoughts.github.io/alephthoughts/jupyter/2019/06/15/jupyterNotebook.html" />
+<meta property="og:url" content="https://alephthoughts.github.io/alephthoughts/jupyter/2019/06/15/jupyterNotebook.html" />
+<meta property="og:site_name" content="Alephthoughts" />
+<meta property="og:image" content="https://alephthoughts.github.io/alephthoughts/images/jupyter.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-15T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://alephthoughts.github.io/alephthoughts/images/jupyter.png" />
+<meta property="twitter:title" content="Publication Ready Jupyter Notebooks" />
+<script type="application/ld+json">
+{"url":"https://alephthoughts.github.io/alephthoughts/jupyter/2019/06/15/jupyterNotebook.html","@type":"BlogPosting","headline":"Publication Ready Jupyter Notebooks","dateModified":"2019-06-15T00:00:00-05:00","datePublished":"2019-06-15T00:00:00-05:00","image":"https://alephthoughts.github.io/alephthoughts/images/jupyter.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://alephthoughts.github.io/alephthoughts/jupyter/2019/06/15/jupyterNotebook.html"},"description":"From notebooks to documents.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/alephthoughts/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://alephthoughts.github.io/alephthoughts/feed.xml" title="Alephthoughts" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116353462-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116353462-1');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/alephthoughts/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/alephthoughts/">Alephthoughts</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/alephthoughts/now/">Now</a><a class="page-link" href="/alephthoughts/search/">Search</a><a class="page-link" href="/alephthoughts/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Publication Ready Jupyter Notebooks</h1><p class="page-description">From notebooks to documents.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-06-15T00:00:00-05:00" itemprop="datePublished">
+        Jun 15, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/alephthoughts/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/alephthoughts/alephthoughts/tree/master/_notebooks/2019-06-15-jupyterNotebook.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/alephthoughts/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/alephthoughts/alephthoughts/master?filepath=_notebooks%2F2019-06-15-jupyterNotebook.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/alephthoughts/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/alephthoughts/alephthoughts/blob/master/_notebooks/2019-06-15-jupyterNotebook.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/alephthoughts/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Falephthoughts%2Falephthoughts%2Fblob%2Fmaster%2F_notebooks%2F2019-06-15-jupyterNotebook.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/alephthoughts/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#Installing-Required-Packages">Installing Required Packages </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#nbconvert">nbconvert </a></li>
+<li class="toc-entry toc-h4"><a href="#Hide_Code">Hide_Code </a></li>
+<li class="toc-entry toc-h4"><a href="#Tabulate">Tabulate </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Creating-the-notebook">Creating the notebook </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Writing-Narrative-Text">Writing Narrative Text </a></li>
+<li class="toc-entry toc-h4"><a href="#Enable-Hide_Code">Enable Hide_Code </a></li>
+<li class="toc-entry toc-h4"><a href="#Adding-colors-to-your-LaTeX-file">Adding colors to your LaTeX file </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2019-06-15-jupyterNotebook.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Documenting your work is an integral part of your development but if you are someone like me and you have to share your work with different set of technical and non-technical audience, you probably go an extra mile to create separate versions of the same results, one with code for your peers, and one for the business stakeholders who may find the code scary or distracting to say the least. <a href="https://jupyter.org/">The Jupyter Notebook</a> makes my life so much easier for the data analysis related work. Although jupyter notebook supports a variety of programming languages like <a href="https://julialang.org/">Julia</a>, <a href="python.org">Python</a> and <a href="https://www.r-project.org/">R</a> for live code and visualisations, alongwith <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>, <a href="https://en.wikipedia.org/wiki/HTML">HTML</a> and others for narrative text, in this post, we will see an example with python code.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Installing-Required-Packages">
+<a class="anchor" href="#Installing-Required-Packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Required Packages<a class="anchor-link" href="#Installing-Required-Packages"> </a>
+</h3>
+<p>Assuming you already have jupyter and python installed on your systems, you need to install the following packages additionally:</p>
+<h4 id="nbconvert">
+<a class="anchor" href="#nbconvert" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/jupyter/nbconvert">nbconvert</a><a class="anchor-link" href="#nbconvert"> </a>
+</h4>
+<p>The nbconvert tools utilises <a href="http://jinja.pocoo.org/">Jinja</a> templates to convert your jupyter notebooks to various document formats such as HTML, LaTeX, PDF, Reveal JS, Markdown, ReStructured Text (rst) and executable script.
+You can install nbconvert using either of the commands depending on your python package manager:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> pip install nbconvert
+<span class="o">!</span> conda install -c anaconda nbconvert
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To convert the notebook to the desired output format use the following command structure:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="err">$</span> <span class="n">jupyter</span> <span class="n">nbconvert</span> <span class="o">--</span><span class="n">to</span> <span class="o">&lt;</span><span class="n">output</span> <span class="nb">format</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">input</span> <span class="n">notebook</span><span class="o">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Hide_Code">
+<a class="anchor" href="#Hide_Code" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/kirbs-/hide_code">Hide_Code</a><a class="anchor-link" href="#Hide_Code"> </a>
+</h4>
+<p>Hide_Code is an extension for your jupyter notebook, which allows you to selectively hide code, prompts and outputs in the jupyter notebook. It also enables these notebooks to be exported to HTML, LaTeX and PDF. Once hide_code is installed on your system, you can enable it by clicking View -&gt; Cell Toolbar -&gt; Hide Code on your jupyter notebook menu.
+<img src="/alephthoughts/images/copied_from_nb/my_icons/hide_code.gif" alt="hide code demo"></p>
+<p>You can install hide_code using following commands:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install hide_code
+<span class="o">!</span>jupyter nbextension install --py hide_code
+<span class="o">!</span>jupyter nbextension <span class="nb">enable</span> --py hide_code
+<span class="o">!</span>jupyter serverextension <span class="nb">enable</span> --py hide_code
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can export your notebooks to desired format using the following commands:<br>
+To HTML <br></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to hide_code_html notebook_to_convert.ipynb
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To PDF</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to hide_code_pdf notebook_to_convert.ipynb
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To LaTeX</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to hide_code_latexpdf notebook_to_convert.ipynb
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Tabulate">
+<a class="anchor" href="#Tabulate" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://bitbucket.org/astanin/python-tabulate/src/master/">Tabulate</a><a class="anchor-link" href="#Tabulate"> </a>
+</h4>
+<p>Tabulate is a python package used for pretty printing tabular data in python.
+You can install tabulate using either of the following commands:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install tabulate
+<span class="o">!</span>conda install -c conda-forge tabulate
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Creating-the-notebook">
+<a class="anchor" href="#Creating-the-notebook" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the notebook<a class="anchor-link" href="#Creating-the-notebook"> </a>
+</h3>
+<p>I have created a <a href="https://github.com/alephthoughts/JupyterPublishDemo">demo notebook</a> on github which you can fork or download or work with your own example.</p>
+<h4 id="Writing-Narrative-Text">
+<a class="anchor" href="#Writing-Narrative-Text" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing Narrative Text<a class="anchor-link" href="#Writing-Narrative-Text"> </a>
+</h4>
+<p>In order to write the narrative text in Markdown or HTML, click on "Cell -&gt; Cell Type -&gt; Markdown" on jupyter menu or press "Esc + m" on your keyboard. This <a href="https://www.markdowntutorial.com/">tutorial</a> gives a good introduction on markdown.</p>
+<h4 id="Enable-Hide_Code">
+<a class="anchor" href="#Enable-Hide_Code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enable Hide_Code<a class="anchor-link" href="#Enable-Hide_Code"> </a>
+</h4>
+<p>Enable Hide_Code which gives you options to "Hide Prompt", "Hide Code" and "Hide Cell" on the top right corner of each cell in the notebook. Using the following command convert your notebook to LaTeX format.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to hide_code_latex notebook_to_convert.ipynb
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Adding-colors-to-your-LaTeX-file">
+<a class="anchor" href="#Adding-colors-to-your-LaTeX-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding colors to your LaTeX file<a class="anchor-link" href="#Adding-colors-to-your-LaTeX-file"> </a>
+</h4>
+<p>By default the export is black and white.You can add color to your latex element by using the following command:<br>
+<code>{\color{&lt;color name&gt;}&lt;element text&gt;}</code><br></p>
+<p>You can color entire sections using the following global definitions: <br>
+<code>\usepackage{sectsty}</code>
+<code>\chapterfont{\color{brown}}</code>
+<code>\sectionfont{\color{brown}}</code>
+<code>\subsectionfont{\color{brown}}</code>
+<code>\subsubsectionfont{\color{teal}}</code>
+<code>\date{\color{brown}June 10, 2019}</code></p>
+<p>You can deep dive into <a href="https://www.latex-tutorial.com/tutorials/?ref=hackr.io">LaTeX</a> if you want to customize it completely. <br>
+This brings us to the end of this post. Hope you will find it useful!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://www.buymeacoffee.com/alephthoughts" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="alephthoughts/alephthoughts"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/alephthoughts/jupyter/2019/06/15/jupyterNotebook.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/alephthoughts/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/alephthoughts/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/alephthoughts/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Using Data Science to solve interesting problems.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/alephthoughts" target="_blank" title="alephthoughts"><svg class="svg-icon grey"><use xlink:href="/alephthoughts/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/alephthoughts" target="_blank" title="alephthoughts"><svg class="svg-icon grey"><use xlink:href="/alephthoughts/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
