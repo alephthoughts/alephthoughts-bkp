@@ -1,6 +1,6 @@
 ---
 layout: default
-title: now
+title: Now
 permalink: /now/
 ---
 
@@ -15,7 +15,7 @@ Lucknow, Uttar Pradesh, India
 - Working at an Analytics Firm in Bengaluru as a Data Science Manager
 - Reading "Essentialism - The Disciplined Pursuit of Less" 
 - Building applications with Deep Learning
-- Bullet Journaling
+- Writing 5 minutes journal
 - Listening to Lex
 
 ### What should we read?
