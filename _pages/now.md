@@ -3,9 +3,9 @@ layout: default
 title: Now
 permalink: /now/
 ---
-![]({{site.baseurl}}/images/logo.png "https://alephthoughts.com")
 
 ## Abhishek Sharma
+---
 
 > An intelligent man cannot become anything seriously, and it is only the fool who becomes anything.
 
@@ -21,3 +21,4 @@ Lucknow, Uttar Pradesh, India
 
 ### What should we read?
 A Short History of Nearly Everything by Bill Bryson
+---
