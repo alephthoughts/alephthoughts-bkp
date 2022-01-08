@@ -5,16 +5,16 @@
   
 
   
-      "page1": {
-          "title": "About Me",
-          "content": "This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
-          "url": "https://alephthoughts.github.io/alephthoughts/about/",
-          "relUrl": "/about/",
+
+  
+      "page2": {
+          "title": "now",
+          "content": "Abhishek Sharma . An intelligent man cannot become anything seriously, and it is only the fool who becomes anything. . Location . Lucknow, Uttar Pradesh, India . Now . Working at an Analytics Firm in Bengaluru as a Data Science Manager | Reading “Essentialism - The Disciplined Pursuit of Less” | Building applications with Deep Learning | Bullet Journaling | Listening to Lex | . What should we read? . A Short History of Nearly Everything by Bill Bryson .",
+          "url": "https://alephthoughts.github.io/alephthoughts/now/",
+          "relUrl": "/now/",
           "date": ""
       }
       
-  
-
   
 
   
