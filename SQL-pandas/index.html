@@ -1,0 +1,3129 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Pandas and SQL side by side | Alephthoughts</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Pandas and SQL side by side" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn sql from pandas or vice-versa" />
+<meta property="og:description" content="Learn sql from pandas or vice-versa" />
+<link rel="canonical" href="https://alephthoughts.com/SQL-pandas/" />
+<meta property="og:url" content="https://alephthoughts.com/SQL-pandas/" />
+<meta property="og:site_name" content="Alephthoughts" />
+<meta property="og:image" content="https://alephthoughts.com/images/scalingpython.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-05T00:00:00-06:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://alephthoughts.com/images/scalingpython.png" />
+<meta property="twitter:title" content="Pandas and SQL side by side" />
+<script type="application/ld+json">
+{"url":"https://alephthoughts.com/SQL-pandas/","@type":"BlogPosting","headline":"Pandas and SQL side by side","dateModified":"2022-01-05T00:00:00-06:00","datePublished":"2022-01-05T00:00:00-06:00","image":"https://alephthoughts.com/images/scalingpython.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://alephthoughts.com/SQL-pandas/"},"description":"Learn sql from pandas or vice-versa","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://alephthoughts.com/feed.xml" title="Alephthoughts" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116353462-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-116353462-1');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Alephthoughts</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/now/">Now</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Pandas and SQL side by side</h1><p class="page-description">Learn sql from pandas or vice-versa</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-01-05T00:00:00-06:00" itemprop="datePublished">
+        Jan 5, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      13 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#data-science">data-science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#machine-learning">machine-learning</a>
+        
+      
+      </p>
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#SELECTing-Data">SELECTing Data </a></li>
+<li class="toc-entry toc-h3"><a href="#Filtering-with-constraints">Filtering with constraints </a></li>
+<li class="toc-entry toc-h3"><a href="#SORTING">SORTING </a></li>
+<li class="toc-entry toc-h3"><a href="#Joining">Joining </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Inner-Join">Inner Join </a></li>
+<li class="toc-entry toc-h4"><a href="#Left-Outer-Join">Left Outer Join </a></li>
+<li class="toc-entry toc-h4"><a href="#Right-Outer-Join">Right Outer Join </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Queries-with-aggregates">Queries with aggregates </a></li>
+<li class="toc-entry toc-h3"><a href="#Pandas-Resources">Pandas Resources </a></li>
+<li class="toc-entry toc-h3"><a href="#SQL-Resources">SQL Resources </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-01-05-PandasandSQL.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>SQL is a must have skill if you are working with data. Pandas is as essential for data analysis in the python. If you're someone who knows pandas and want to learn SQL or you know SQL and want to learn pandas, this post will introduce you to some basic skills.</p>
+<p>To work on SQL you need access to a database hosted locally or on the cloud. Some popular databases you can work with are the following:</p>
+<ul>
+<li><a href="https://www.mysql.com/">MySQL</a></li>
+<li><a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">MS SQL Server</a></li>
+<li><a href="https://www.oracle.com/database/">Oracle</a></li>
+<li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+<li><a href="https://www.teradata.com/Products/Software/Database">Teradata</a></li>
+<li><a href="https://cloud.google.com/bigquery/">BigQuery</a></li>
+<li><a href="https://aws.amazon.com/redshift/">Redshift</a></li>
+</ul>
+<p>There are many more but I've tried to list down the popular ones. 
+To show side by side examples, however, I am not using any database. I have using a SQL engine called <a href="https://github.com/yhat/pandasql/">pandassql</a>. So to run these examples, you will have to read some <a href="https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results">data</a> into pandas dataframe and then use pandasql to run SQL queries.</p>
+<p>So the steps are as follows:</p>
+<ol>
+<li>!pip install -U pandassql</li>
+<li>import pandas as pd</li>
+<li>from pandassql import sqldf</li>
+<li>data = pd.read_csv(&lt;path-to-athlete_events.csv&gt;)</li>
+<li>Run these examples</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="SELECTing-Data">
+<a class="anchor" href="#SELECTing-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>SELECTing Data<a class="anchor-link" href="#SELECTing-Data"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once you import the data, select 5 rows from the data just to inspects. Below is an example of how to select top 5 rows in pandas:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>A Dijiang</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>180.0</td>
+      <td>80.0</td>
+      <td>China</td>
+      <td>CHN</td>
+      <td>1992 Summer</td>
+      <td>1992</td>
+      <td>Summer</td>
+      <td>Barcelona</td>
+      <td>Basketball</td>
+      <td>Basketball Men's Basketball</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>A Lamusi</td>
+      <td>M</td>
+      <td>23.0</td>
+      <td>170.0</td>
+      <td>60.0</td>
+      <td>China</td>
+      <td>CHN</td>
+      <td>2012 Summer</td>
+      <td>2012</td>
+      <td>Summer</td>
+      <td>London</td>
+      <td>Judo</td>
+      <td>Judo Men's Extra-Lightweight</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Gunnar Nielsen Aaby</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Denmark</td>
+      <td>DEN</td>
+      <td>1920 Summer</td>
+      <td>1920</td>
+      <td>Summer</td>
+      <td>Antwerpen</td>
+      <td>Football</td>
+      <td>Football Men's Football</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Edgar Lindenau Aabye</td>
+      <td>M</td>
+      <td>34.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Denmark/Sweden</td>
+      <td>DEN</td>
+      <td>1900 Summer</td>
+      <td>1900</td>
+      <td>Summer</td>
+      <td>Paris</td>
+      <td>Tug-Of-War</td>
+      <td>Tug-Of-War Men's Tug-Of-War</td>
+      <td>Gold</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Christine Jacoba Aaftink</td>
+      <td>F</td>
+      <td>21.0</td>
+      <td>185.0</td>
+      <td>82.0</td>
+      <td>Netherlands</td>
+      <td>NED</td>
+      <td>1988 Winter</td>
+      <td>1988</td>
+      <td>Winter</td>
+      <td>Calgary</td>
+      <td>Speed Skating</td>
+      <td>Speed Skating Women's 500 metres</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can achieve the same result in SQL:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s2">"SELECT * FROM data LIMIT 5"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>A Dijiang</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>180.0</td>
+      <td>80.0</td>
+      <td>China</td>
+      <td>CHN</td>
+      <td>1992 Summer</td>
+      <td>1992</td>
+      <td>Summer</td>
+      <td>Barcelona</td>
+      <td>Basketball</td>
+      <td>Basketball Men's Basketball</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>A Lamusi</td>
+      <td>M</td>
+      <td>23.0</td>
+      <td>170.0</td>
+      <td>60.0</td>
+      <td>China</td>
+      <td>CHN</td>
+      <td>2012 Summer</td>
+      <td>2012</td>
+      <td>Summer</td>
+      <td>London</td>
+      <td>Judo</td>
+      <td>Judo Men's Extra-Lightweight</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Gunnar Nielsen Aaby</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Denmark</td>
+      <td>DEN</td>
+      <td>1920 Summer</td>
+      <td>1920</td>
+      <td>Summer</td>
+      <td>Antwerpen</td>
+      <td>Football</td>
+      <td>Football Men's Football</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Edgar Lindenau Aabye</td>
+      <td>M</td>
+      <td>34.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Denmark/Sweden</td>
+      <td>DEN</td>
+      <td>1900 Summer</td>
+      <td>1900</td>
+      <td>Summer</td>
+      <td>Paris</td>
+      <td>Tug-Of-War</td>
+      <td>Tug-Of-War Men's Tug-Of-War</td>
+      <td>Gold</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Christine Jacoba Aaftink</td>
+      <td>F</td>
+      <td>21.0</td>
+      <td>185.0</td>
+      <td>82.0</td>
+      <td>Netherlands</td>
+      <td>NED</td>
+      <td>1988 Winter</td>
+      <td>1988</td>
+      <td>Winter</td>
+      <td>Calgary</td>
+      <td>Speed Skating</td>
+      <td>Speed Skating Women's 500 metres</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Both pandas and SQL allow you to select specific columns from the dataframe(pandas) or table(SQL).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Age'</span><span class="p">,</span> <span class="s1">'Team'</span><span class="p">,</span> <span class="s1">'Year'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Team</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A Dijiang</td>
+      <td>24.0</td>
+      <td>China</td>
+      <td>1992</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A Lamusi</td>
+      <td>23.0</td>
+      <td>China</td>
+      <td>2012</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Gunnar Nielsen Aaby</td>
+      <td>24.0</td>
+      <td>Denmark</td>
+      <td>1920</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Edgar Lindenau Aabye</td>
+      <td>34.0</td>
+      <td>Denmark/Sweden</td>
+      <td>1900</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine Jacoba Aaftink</td>
+      <td>21.0</td>
+      <td>Netherlands</td>
+      <td>1988</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT Name, Age, Team, Year FROM data LIMIT 5'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Team</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A Dijiang</td>
+      <td>24.0</td>
+      <td>China</td>
+      <td>1992</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A Lamusi</td>
+      <td>23.0</td>
+      <td>China</td>
+      <td>2012</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Gunnar Nielsen Aaby</td>
+      <td>24.0</td>
+      <td>Denmark</td>
+      <td>1920</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Edgar Lindenau Aabye</td>
+      <td>34.0</td>
+      <td>Denmark/Sweden</td>
+      <td>1900</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine Jacoba Aaftink</td>
+      <td>21.0</td>
+      <td>Netherlands</td>
+      <td>1988</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Filtering-with-constraints">
+<a class="anchor" href="#Filtering-with-constraints" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering with constraints<a class="anchor-link" href="#Filtering-with-constraints"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>iloc</code> property of a pandas dataframe allows you to select a row by its index as shown below. Here we are particulary selecting the 6th row by applying the filter on index.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>ID                                       5
+Name              Christine Jacoba Aaftink
+Sex                                      F
+Age                                   25.0
+Height                               185.0
+Weight                                82.0
+Team                           Netherlands
+NOC                                    NED
+Games                          1992 Winter
+Year                                  1992
+Season                              Winter
+City                           Albertville
+Sport                        Speed Skating
+Event     Speed Skating Women's 500 metres
+Medal                                  NaN
+Name: 6, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In SQL most databases provide a rowid index to select a specific row from the table.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s2">"SELECT * FROM data WHERE rowid=6"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5</td>
+      <td>Christine Jacoba Aaftink</td>
+      <td>F</td>
+      <td>21.0</td>
+      <td>185.0</td>
+      <td>82.0</td>
+      <td>Netherlands</td>
+      <td>NED</td>
+      <td>1988 Winter</td>
+      <td>1988</td>
+      <td>Winter</td>
+      <td>Calgary</td>
+      <td>Speed Skating</td>
+      <td>Speed Skating Women's 1,000 metres</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can filter on a condition applied on column or multiple columns. In case of multiple columns, the conditions are combined with boolen expressions such as AND, OR etc.</p>
+<p>Here is how to count records which satisfy the condition "Age of the athelete is greater than 30".</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">'Age'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">30</span><span class="p">][</span><span class="s1">'ID'</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>42107</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT COUNT(*) FROM data WHERE Age &gt; 30'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>COUNT(*)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>42107</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below is an example of multiple conditions. We are selecting all records of <code>Hockey</code> for team <code>India</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="s1">'Team'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'India'</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'Sport'</span><span class="p">]</span><span class="o">==</span><span class="s1">'Hockey'</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2513</th>
+      <td>1415</td>
+      <td>Shakeel Ahmed</td>
+      <td>M</td>
+      <td>21.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1992 Summer</td>
+      <td>1992</td>
+      <td>Summer</td>
+      <td>Barcelona</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4289</th>
+      <td>2453</td>
+      <td>Anil Alexander Aldrin</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1996 Summer</td>
+      <td>1996</td>
+      <td>Summer</td>
+      <td>Atlanta</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4732</th>
+      <td>2699</td>
+      <td>Shaukat Ali</td>
+      <td>M</td>
+      <td>30.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1928 Summer</td>
+      <td>1928</td>
+      <td>Summer</td>
+      <td>Amsterdam</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>Gold</td>
+    </tr>
+    <tr>
+      <th>4735</th>
+      <td>2702</td>
+      <td>Syed Ali</td>
+      <td>M</td>
+      <td>19.0</td>
+      <td>169.0</td>
+      <td>60.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1976 Summer</td>
+      <td>1976</td>
+      <td>Summer</td>
+      <td>Montreal</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4736</th>
+      <td>2703</td>
+      <td>Syed Mushtaq Ali</td>
+      <td>M</td>
+      <td>22.0</td>
+      <td>165.0</td>
+      <td>61.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1964 Summer</td>
+      <td>1964</td>
+      <td>Summer</td>
+      <td>Tokyo</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>Gold</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>253354</th>
+      <td>126867</td>
+      <td>Sunil Sowmarpet Vitalacharya</td>
+      <td>M</td>
+      <td>27.0</td>
+      <td>176.0</td>
+      <td>68.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>256143</th>
+      <td>128249</td>
+      <td>Devindar Sunil Walmiki</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>178.0</td>
+      <td>69.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>263723</th>
+      <td>131974</td>
+      <td>William Xalco</td>
+      <td>M</td>
+      <td>20.0</td>
+      <td>167.0</td>
+      <td>60.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2004 Summer</td>
+      <td>2004</td>
+      <td>Summer</td>
+      <td>Athina</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>264075</th>
+      <td>132142</td>
+      <td>Renuka Yadav</td>
+      <td>F</td>
+      <td>22.0</td>
+      <td>159.0</td>
+      <td>53.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Hockey</td>
+      <td>Hockey Women's Hockey</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>266934</th>
+      <td>133554</td>
+      <td>Sayed Muhammad Yusuf</td>
+      <td>M</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1928 Summer</td>
+      <td>1928</td>
+      <td>Summer</td>
+      <td>Amsterdam</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>Gold</td>
+    </tr>
+  </tbody>
+</table>
+<p>345 rows × 15 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT * FROM data WHERE Team="India" AND Sport="Hockey"'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1415</td>
+      <td>Shakeel Ahmed</td>
+      <td>M</td>
+      <td>21.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1992 Summer</td>
+      <td>1992</td>
+      <td>Summer</td>
+      <td>Barcelona</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2453</td>
+      <td>Anil Alexander Aldrin</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1996 Summer</td>
+      <td>1996</td>
+      <td>Summer</td>
+      <td>Atlanta</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2699</td>
+      <td>Shaukat Ali</td>
+      <td>M</td>
+      <td>30.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1928 Summer</td>
+      <td>1928</td>
+      <td>Summer</td>
+      <td>Amsterdam</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>Gold</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2702</td>
+      <td>Syed Ali</td>
+      <td>M</td>
+      <td>19.0</td>
+      <td>169.0</td>
+      <td>60.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1976 Summer</td>
+      <td>1976</td>
+      <td>Summer</td>
+      <td>Montreal</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2703</td>
+      <td>Syed Mushtaq Ali</td>
+      <td>M</td>
+      <td>22.0</td>
+      <td>165.0</td>
+      <td>61.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1964 Summer</td>
+      <td>1964</td>
+      <td>Summer</td>
+      <td>Tokyo</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>Gold</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>126867</td>
+      <td>Sunil Sowmarpet Vitalacharya</td>
+      <td>M</td>
+      <td>27.0</td>
+      <td>176.0</td>
+      <td>68.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>128249</td>
+      <td>Devindar Sunil Walmiki</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>178.0</td>
+      <td>69.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>342</th>
+      <td>131974</td>
+      <td>William Xalco</td>
+      <td>M</td>
+      <td>20.0</td>
+      <td>167.0</td>
+      <td>60.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2004 Summer</td>
+      <td>2004</td>
+      <td>Summer</td>
+      <td>Athina</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>132142</td>
+      <td>Renuka Yadav</td>
+      <td>F</td>
+      <td>22.0</td>
+      <td>159.0</td>
+      <td>53.0</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Hockey</td>
+      <td>Hockey Women's Hockey</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>344</th>
+      <td>133554</td>
+      <td>Sayed Muhammad Yusuf</td>
+      <td>M</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>India</td>
+      <td>IND</td>
+      <td>1928 Summer</td>
+      <td>1928</td>
+      <td>Summer</td>
+      <td>Amsterdam</td>
+      <td>Hockey</td>
+      <td>Hockey Men's Hockey</td>
+      <td>Gold</td>
+    </tr>
+  </tbody>
+</table>
+<p>345 rows × 15 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="SORTING">
+<a class="anchor" href="#SORTING" aria-hidden="true"><span class="octicon octicon-link"></span></a>SORTING<a class="anchor-link" href="#SORTING"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sorting is another common operation required during data analysis. You can sort on one or more columns and in ascending (low to high) or descending (high to low) order.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">'Age'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>257054</th>
+      <td>128719</td>
+      <td>John Quincy Adams Ward</td>
+      <td>M</td>
+      <td>97.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1928 Summer</td>
+      <td>1928</td>
+      <td>Summer</td>
+      <td>Amsterdam</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Sculpturing, Statues</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>98118</th>
+      <td>49663</td>
+      <td>Winslow Homer</td>
+      <td>M</td>
+      <td>96.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>60863</th>
+      <td>31173</td>
+      <td>Thomas Cowperthwait Eakins</td>
+      <td>M</td>
+      <td>88.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>60861</th>
+      <td>31173</td>
+      <td>Thomas Cowperthwait Eakins</td>
+      <td>M</td>
+      <td>88.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>60862</th>
+      <td>31173</td>
+      <td>Thomas Cowperthwait Eakins</td>
+      <td>M</td>
+      <td>88.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT * from data ORDER BY Age DESC LIMIT 5'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>128719</td>
+      <td>John Quincy Adams Ward</td>
+      <td>M</td>
+      <td>97.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1928 Summer</td>
+      <td>1928</td>
+      <td>Summer</td>
+      <td>Amsterdam</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Sculpturing, Statues</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>49663</td>
+      <td>Winslow Homer</td>
+      <td>M</td>
+      <td>96.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>31173</td>
+      <td>Thomas Cowperthwait Eakins</td>
+      <td>M</td>
+      <td>88.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>31173</td>
+      <td>Thomas Cowperthwait Eakins</td>
+      <td>M</td>
+      <td>88.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>31173</td>
+      <td>Thomas Cowperthwait Eakins</td>
+      <td>M</td>
+      <td>88.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>United States</td>
+      <td>USA</td>
+      <td>1932 Summer</td>
+      <td>1932</td>
+      <td>Summer</td>
+      <td>Los Angeles</td>
+      <td>Art Competitions</td>
+      <td>Art Competitions Mixed Painting, Unknown Event</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Joining">
+<a class="anchor" href="#Joining" aria-hidden="true"><span class="octicon octicon-link"></span></a>Joining<a class="anchor-link" href="#Joining"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Joining one dataset with another is a common operation while working with data. This is a simple aspect of SQL which stumps more people than it should.</p>
+<p>I reckon, it is important to work with a simple example using few rows of data to get this right. That is what I am going to do using synthetic tables <code>employee</code> and <code>assets</code> with dummy data.</p>
+<p>Please notice the column we are joining on, usually termed as <em>key</em>. If the <em>key</em> has duplicate values, the records multiply.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100</td>
+      <td>100</td>
+      <td>John Doe</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>101</td>
+      <td>100</td>
+      <td>Will green</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>102</td>
+      <td>200</td>
+      <td>Wilson Miner</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>104</td>
+      <td>200</td>
+      <td>Rochel Dmello</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>105</td>
+      <td>300</td>
+      <td>Dickie Bird</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AssetID</th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>aab</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>aba</td>
+      <td>101</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>baa</td>
+      <td>201</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>cde</td>
+      <td>202</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>efg</td>
+      <td>103</td>
+      <td>300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Inner-Join">
+<a class="anchor" href="#Inner-Join" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inner Join<a class="anchor-link" href="#Inner-Join"> </a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The simplest type of join is the <code>inner</code> join.
+This operation returns the common records from the left table (employee) and the right table (asset).</p>
+<p>Pandas uses <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.merge.html">merge</a> method to join to tables.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">employee</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">asset</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'EmployeeID'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EmployeeID</th>
+      <th>DepartmentID_x</th>
+      <th>Name</th>
+      <th>AssetID</th>
+      <th>DepartmentID_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100</td>
+      <td>100</td>
+      <td>John Doe</td>
+      <td>aab</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>101</td>
+      <td>100</td>
+      <td>Will green</td>
+      <td>aba</td>
+      <td>100</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT * FROM employee E JOIN asset A ON E.EmployeeID = A.EmployeeID'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+      <th>Name</th>
+      <th>AssetID</th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100</td>
+      <td>100</td>
+      <td>John Doe</td>
+      <td>aab</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>101</td>
+      <td>100</td>
+      <td>Will green</td>
+      <td>aba</td>
+      <td>101</td>
+      <td>100</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Left-Outer-Join">
+<a class="anchor" href="#Left-Outer-Join" aria-hidden="true"><span class="octicon octicon-link"></span></a>Left Outer Join<a class="anchor-link" href="#Left-Outer-Join"> </a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In Left Outer Join, you get all records from the left table, and only matching records from the right table.
+    Note the <code>NaN</code> and <code>None</code> values resulting in rows for which <em>key</em> doesn't match.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">employee</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">asset</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'EmployeeID'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EmployeeID</th>
+      <th>DepartmentID_x</th>
+      <th>Name</th>
+      <th>AssetID</th>
+      <th>DepartmentID_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100</td>
+      <td>100</td>
+      <td>John Doe</td>
+      <td>aab</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>101</td>
+      <td>100</td>
+      <td>Will green</td>
+      <td>aba</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>102</td>
+      <td>200</td>
+      <td>Wilson Miner</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>104</td>
+      <td>200</td>
+      <td>Rochel Dmello</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>105</td>
+      <td>300</td>
+      <td>Dickie Bird</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT E.*, A.* FROM employee E LEFT JOIN asset A ON E.EmployeeID = A.EmployeeID'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+      <th>Name</th>
+      <th>AssetID</th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100</td>
+      <td>100</td>
+      <td>John Doe</td>
+      <td>aab</td>
+      <td>100.0</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>101</td>
+      <td>100</td>
+      <td>Will green</td>
+      <td>aba</td>
+      <td>101.0</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>102</td>
+      <td>200</td>
+      <td>Wilson Miner</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>104</td>
+      <td>200</td>
+      <td>Rochel Dmello</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>105</td>
+      <td>300</td>
+      <td>Dickie Bird</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Right-Outer-Join">
+<a class="anchor" href="#Right-Outer-Join" aria-hidden="true"><span class="octicon octicon-link"></span></a>Right Outer Join<a class="anchor-link" href="#Right-Outer-Join"> </a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Right join has the opposite effect of the left join.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">employee</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">asset</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'EmployeeID'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'right'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EmployeeID</th>
+      <th>DepartmentID_x</th>
+      <th>Name</th>
+      <th>AssetID</th>
+      <th>DepartmentID_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100</td>
+      <td>100.0</td>
+      <td>John Doe</td>
+      <td>aab</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>101</td>
+      <td>100.0</td>
+      <td>Will green</td>
+      <td>aba</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>201</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>baa</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>202</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>cde</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>103</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>efg</td>
+      <td>300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In fact pandassql doesn't support Right Join but you can achieve the same result by calling <code>asset</code> as the left table and <code>employee</code> as the right table.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT E.*, A.* FROM asset A LEFT JOIN employee E ON A.EmployeeID = E.EmployeeID'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+      <th>Name</th>
+      <th>AssetID</th>
+      <th>EmployeeID</th>
+      <th>DepartmentID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>John Doe</td>
+      <td>aab</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>101.0</td>
+      <td>100.0</td>
+      <td>Will green</td>
+      <td>aba</td>
+      <td>101</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>baa</td>
+      <td>201</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>cde</td>
+      <td>202</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+      <td>efg</td>
+      <td>103</td>
+      <td>300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Another type of join pandasql doesn't support is the <strong>Full outer join</strong>, which returns all matching as well as not matching records from both the tables.</p>
+<p>You need not worry about these missing type of joins in pandassql, all database that I have worked with support Right Join and Full Outer Join. With some trickery you can even achieve these in pandassql but it's not required for this conversation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Queries-with-aggregates">
+<a class="anchor" href="#Queries-with-aggregates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Queries with aggregates<a class="anchor-link" href="#Queries-with-aggregates"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Aggregates are another SQL technique where you group your records based on one or more columns and perform some aggregate calculation on another set of columns such as MIN, MAX, SUM, COUNT, AVG, and so on.</p>
+<p>Here is an example of count where we count '<code>Medal</code>s by team, sort them in descending order and show top % results.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Team'</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">'Medal'</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Medal'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Team</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1095</th>
+      <td>United States</td>
+      <td>5219</td>
+    </tr>
+    <tr>
+      <th>976</th>
+      <td>Soviet Union</td>
+      <td>2451</td>
+    </tr>
+    <tr>
+      <th>398</th>
+      <td>Germany</td>
+      <td>1984</td>
+    </tr>
+    <tr>
+      <th>412</th>
+      <td>Great Britain</td>
+      <td>1673</td>
+    </tr>
+    <tr>
+      <th>361</th>
+      <td>France</td>
+      <td>1550</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT Team, COUNT(Medal) FROM data GROUP BY Team ORDER BY COUNT(Medal) DESC LIMIT 5'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Team</th>
+      <th>COUNT(Medal)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>United States</td>
+      <td>5219</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Soviet Union</td>
+      <td>2451</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Germany</td>
+      <td>1984</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Great Britain</td>
+      <td>1673</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>France</td>
+      <td>1550</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here is another example where we filter just one sport <code>swimming</code> and do the earlier calculation.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">'Sport'</span><span class="p">]</span><span class="o">==</span><span class="s1">'Swimming'</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Team'</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s1">'Medal'</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Medal'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Team</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>197</th>
+      <td>United States</td>
+      <td>1066</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Australia</td>
+      <td>401</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>East Germany</td>
+      <td>152</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Germany</td>
+      <td>152</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>Great Britain</td>
+      <td>127</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sqldf</span><span class="p">(</span><span class="s1">'SELECT Team, COUNT(Medal) FROM data Where Sport = "Swimming" GROUP BY Team ORDER BY COUNT(Medal) DESC LIMIT 5'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Team</th>
+      <th>COUNT(Medal)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>United States</td>
+      <td>1066</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Australia</td>
+      <td>401</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Germany</td>
+      <td>152</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>East Germany</td>
+      <td>152</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Great Britain</td>
+      <td>127</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There is a lot more you can do with SQL, like filtering on aggregated data usin HAVING clause. Partition data by row, rank or dense rank. Use analytical functions to compute values across rows or over a window.</p>
+<p>There is even more that you can do with pandas. Here I am listing some resources if you're ready for a deep dive.</p>
+<h3 id="Pandas-Resources">
+<a class="anchor" href="#Pandas-Resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pandas Resources<a class="anchor-link" href="#Pandas-Resources"> </a>
+</h3>
+<ul>
+<li>
+<a href="https://www.amazon.com/Python-Data-Analysis-Wrangling-IPython/dp/1491957662/ref=sr_1_1?crid=FHSZBNN2LW2O&amp;keywords=wes+mckinney&amp;qid=1641999545&amp;sprefix=wes+mckinney%2Caps%2C417&amp;sr=8-1">Python for data analysis by Wes McKinney</a><sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup>
+</li>
+</ul>
+<h3 id="SQL-Resources">
+<a class="anchor" href="#SQL-Resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>SQL Resources<a class="anchor-link" href="#SQL-Resources"> </a>
+</h3>
+<ul>
+<li><a href="https://kaggle.com/learn/intro-to-sql">Kaggle's Intro to SQL</a></li>
+<li><a href="https://t.co/GRhUKFSyS6">SQL Bolt</a></li>
+<li><a href="https://t.co/c1KRNA74vY">SQL for Data Scientists by Renee Teate</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://www.buymeacoffee.com/alephthoughts" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-1">1. There are many resources but for pandas this is all you really need<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="alephthoughts/alephthoughts"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/SQL-pandas/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Using Data Science to solve interesting problems.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/alephthoughts" target="_blank" title="alephthoughts"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/alephthoughts" target="_blank" title="alephthoughts"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
